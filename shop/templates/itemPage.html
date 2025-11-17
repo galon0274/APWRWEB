@@ -1,0 +1,51 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="מכירה והתקנה של מטענים לרכבים חשמליים">
+    <meta name="keywords" content="עמדת טעינה, רכב חשמלי, מכירת מטענים, התקנת עמדות">
+    <meta name="author" content="A - Power">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A - Power</title>
+{#    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='apwrWelcome.css')}}">#}
+    <link rel="stylesheet" href="{% static 'shop/css/itemPage.css' %}">
+    <link rel="stylesheet" href="{% static 'shop/css/apwrWelcome.css' %}">
+    <link rel="stylesheet" href="{% static 'shop/css/apwrStd.css' %}">
+    <script src="https://kit.fontawesome.com/c42fc0c0f4.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <header id="hdrMainId">
+        <section class="hdrSecLeft" id="hdrBlk1Id">
+            <a href="/" class="hdrPar" id="topHdrId">A - Power</a>
+        </section>
+
+    </header>
+    <section class="row" id="row1Id">
+    </section>
+    <section class="row" id="row3Id">
+        <div class="centerCont" id="row3CenterId">
+            <!--
+            <div class="itemWrap" id="itemsWrapId">
+
+            </div>
+            -->
+        </div>
+    </section>
+
+    <br>
+    <br>
+
+
+    {{ dItem|json_script:"item-details" }}
+
+
+
+<script src="{% static 'shop/js/itemPage.js' %}"></script>
+</body>
+</html>
+
+<script src="{% static 'shop/js/apwrMain.js' %}"></script>
+<!--
+<script src="{% static 'shop/js/apwrWelcome.js' %}"></script>
+-->

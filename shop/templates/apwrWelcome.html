@@ -1,22 +1,22 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
     <meta charset="UTF-8">
     <meta name="description" content="מכירה והתקנה של מטענים לרכבים חשמליים">
     <meta name="keywords" content="עמדת טעינה, רכב חשמלי, מכירת מטענים, התקנת עמדות">
     <meta name="author" content="A - Power">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'shop/css/apwrWelcome.css' %}">
-    <link rel="stylesheet" href="{% static 'shop/css/apwrStd.css' %}">
-    <script src="https://kit.fontawesome.com/c42fc0c0f4.js" crossorigin="anonymous"></script>
-
     <title>A - Power</title>
-
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='apwrWelcome.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='apwrStd.css')}}">
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+    <script src="https://kit.fontawesome.com/c42fc0c0f4.js" crossorigin="anonymous"></script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7MJP2H6TW3"></script>
+    <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-7MJP2H6TW3'); </script>
 </head>
 <body>
-<header id="hdrMainId">
+    <header id="hdrMainId">
         <section class="hdrSecLeft" id="hdrBlk1Id">
             <a href="/" class="hdrPar" id="topHdrId">A - Power</a>
         </section>
@@ -132,9 +132,12 @@
     </section>
     <br>
     <br>
-{{ pList|json_script:"items-data" }}
-<script src="{% static 'shop/js/apwrMain.js' %}"></script>
-<script src="{% static 'shop/js/apwrWelcome.js' %}"></script>
+    <!--
+<footer id="debugId">this is the footer</footer>
+-->
 
 </body>
 </html>
+<script src="{{ url_for('static', filename='jquery/jquery.min.js') }}"></script>
+<script src="{{ url_for('static', filename='apwrMain.js') }}"></script>
+<script src="{{ url_for('static', filename='apwrWelcome.js') }}"></script>

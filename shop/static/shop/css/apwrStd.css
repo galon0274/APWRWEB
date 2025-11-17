@@ -1,0 +1,350 @@
+body {
+    background-color: whitesmoke;
+    margin: 0px;
+    font-family: Arial;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+/* Styling Header */
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: darkolivegreen;
+    color: white;
+    font-family: Arial;
+    font-style: italic;
+    font-weight: bold;
+    margin: 0px;
+    padding-block: 0.5em;
+    padding-inline: 1em;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+.hdrSecLeft {
+    /*float: left;*/
+    display: inline-block;
+    width: 50%;
+    /*height: 100%;*/
+    /*margin: auto;*/
+    text-align: center;
+    font-size: 1.4em;
+}
+@media screen and (min-width: 600px) {
+    .hdrSecLeft {
+        display: inline-block;
+        width: 20%;
+        text-align: center;
+        font-size: 2em;
+    }
+}
+@media screen and (min-width: 992px) {
+    /*header {
+        justify-content: space-between;
+    } */
+    .hdrSecLeft {
+
+        display: inline-block;
+        width: 20%;
+        text-align: center;
+        font-size: 2.5em;
+    }
+}
+.hdrPar {
+    margin: 0px;
+    padding: 0px;
+    white-space: nowrap;
+}
+#topHdrId {
+    color: white;
+    text-decoration: none;
+}
+.hamburgerIcon {
+    border: none;
+    cursor: pointer;
+}
+.lineBar1 {
+    width: 24px;
+    height: 2px;
+    background-color: white;
+    margin: 4px 0;
+    transition: 0.5s;
+}
+.lineBar2 {
+    width: 24px;
+    height: 2px;
+    background-color: white;
+    margin: 4px 0;
+    transition: 0.5s;
+}
+.lineBar3 {
+    width: 24px;
+    height: 2px;
+    background-color: white;
+    margin: 4px 0;
+    transition: 0.5s;
+}
+.change .lineBar1 {
+    transform: translate(0px, 8px); rotate: -45deg;
+}
+.change .lineBar2 {
+    opacity: 0;
+}
+.change .lineBar3 {
+    transform: translate(0px, -8px); rotate: 45deg;
+}
+.sidePanel {
+    width: 100%;
+    position: fixed;
+    z-index: 1;
+    height: 0px;
+    top: auto;
+    right: 0;
+    background-color: white;
+    /*opacity: 0.4;*/
+    overflow-y: hidden;
+    transition: 0.5s;
+    /*padding-top: 15px;*/
+    direction: rtl;
+}
+@media screen and (min-width: 600px) {
+    .sidePanel {
+        width: 100%;
+    }
+}
+@media screen and (min-width: 992px) {
+    .sidePanel {
+        width: 250px;
+    }
+}
+.sidePanel a {
+    display: block;
+    color: black;
+    cursor: pointer;
+    padding: 0.5em 10%;
+    text-decoration: none;
+    font-weight: bold;
+}
+.overlayBlock{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.35);
+    direction: rtl;
+    align-items: center;
+}
+.row1TextWrap {
+    width: 80%;
+}
+.stdMainHdr {
+    text-align: center;
+    font-size: 1.5em;
+    color: white;
+    font-weight: bold;
+}
+.stdSecHdr {
+    text-align: center;
+    font-size: 1em;
+    color: white;
+    font-weight: bold;
+}
+.stdSmallHdr {
+    text-align: center;
+    font-size: 0.8em;
+    color: white;
+    font-weight: bold;
+}
+@media screen and (min-width: 600px) {
+    .stdMainHdr {
+        font-size: 1.5em;
+    }
+    .stdSecHdr {
+        font-size: 1em;
+    }
+    .stdSmallHdr {
+        font-size: 0.8em;
+    }
+}
+@media screen and (min-width: 992px) {
+    .stdMainHdr {
+        font-size: 2em;
+    }
+    .stdSecHdr {
+        font-size: 1.5em;
+    }
+    .stdSmallHdr {
+        font-size: 1em;
+    }
+}
+@media screen and (min-width: 1200px) {
+    .stdMainHdr {
+        font-size: 3em;
+    }
+    .stdSecHdr {
+        font-size: 2em;
+    }
+    .stdSmallHdr {
+        font-size: 1.2em;
+    }
+}
+
+.stdTxt {
+    font-size: 0.8em;
+    margin-block-start: 0em;
+    margin-block-end: 0em;
+}
+.stdTxtB {
+    font-size: 0.8em;
+    font-weight: bold;
+    margin-block-start: 0em;
+    margin-block-end: 0em;
+}
+.stdTxtCB {
+    font-size: 1em;
+    font-weight: bold;
+    margin-block-start: 0em;
+    margin-block-end: 0em;
+    text-align: center;
+}
+.stdCellTxt {
+    float: right;
+    font-size: 0.8em;
+    margin-block-start: 0em;
+    margin-block-end: 0em;
+}
+.stdTxtSmall {
+    font-size: 0.6em;
+    margin-block-start: 0em;
+    margin-block-end: 0em;
+}
+.stdTitle {
+    display: block;
+    text-align: center;
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-block-start: 0.5em;
+    margin-block-end: 0.5em;
+}
+.stdWrap {
+    display: inline-block;
+    width: 96%;
+    margin-inline: 2%;
+    padding-inline: 1%;
+    padding-block: 0;
+    box-sizing: border-box;
+}
+.stdWrapNoPad {
+    display: inline-block;
+    width: 100%;
+    padding: 0;
+}
+.stdInput {
+    width: 100%;
+    font-size: 1em;
+    padding: 0.5em;
+    color: black;
+    background-color: rgba(127, 127, 127, 0.15);
+    /*opacity: 0.5;*/
+    border: none;
+}
+
+.stdInputWrap {
+    float: right;
+    position: relative;
+    width: 100%;
+    padding-inline: 1em;
+    box-sizing: border-box;
+}
+@media screen and (min-width: 600px) {
+    .stdInputWrap {
+        width: 100%;
+    }
+}
+@media screen and (min-width: 992px) {
+    .stdInputWrap {
+        width: 70%;
+    }
+}
+@media screen and (min-width: 1200px) {
+    .stdInputWrap {
+        width: 50%;
+    }
+}
+.stdWideInputWrap {
+    float: right;
+    position: relative;
+    width: 100%;
+    padding-inline: 1em;
+    box-sizing: border-box;
+    margin-bottom: 1em;
+}
+.stdNrInputWrap {
+    float: right;
+    position: relative;
+    width: 50%;
+    padding-inline: 1em;
+    box-sizing: border-box;
+}
+@media screen and (min-width: 600px) {
+    .stdWideInputWrap {
+        width: 100%;
+    }
+    .stdNrInputWrap {
+        width: 50%;
+    }
+}
+@media screen and (min-width: 992px) {
+    .stdWideInputWrap {
+        width: 70%;
+    }
+    .stdNrInputWrap {
+        width: 30%;
+    }
+}
+@media screen and (min-width: 1200px) {
+    .stdWideInputWrap {
+        width: 70%;
+    }
+    .stdNrInputWrap {
+        width: 30%;
+    }
+}
+
+.stdLabel {
+    display: block;
+    font-size: 1em;
+    margin-bottom: 0.3em;
+}
+.stdH3 {
+    text-align: center;
+}
+.stdBlkWrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80%;
+    padding-block: 60px;
+    padding-inline: 5%;
+    box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.15);
+    margin-inline: auto;
+    margin-block: 10%;
+    background-color: white;
+    direction: rtl;
+}
+@media screen and (min-width: 600px) {
+    .stdBlkWrap {
+        width: 80%;
+    }
+}
+@media screen and (min-width: 992px) {
+    .stdBlkWrap {
+        width: 50%;
+    }
+}
+.stdLink {
+
+}
+
