@@ -16,6 +16,7 @@
 
 </head>
 <body>
+{{ csrf_token|stringformat:"s"|json_script:"csrf-token" }}
 <header id="hdrMainId">
         <section class="hdrSecLeft" id="hdrBlk1Id">
             <a href="/" class="hdrPar" id="topHdrId">A - Power</a>
@@ -133,6 +134,10 @@
     <br>
     <br>
 {{ pList|json_script:"items-data" }}
+<script>
+    // loginPageURL setup
+    const LOGIN_PAGE_URL = "{% url 'loginPageURL' %}";
+</script>
 <script src="{% static 'shop/js/apwrMain.js' %}"></script>
 <script src="{% static 'shop/js/apwrWelcome.js' %}"></script>
 

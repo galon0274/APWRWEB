@@ -1,0 +1,67 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="מכירה והתקנה של מטענים לרכבים חשמליים">
+    <meta name="keywords" content="עמדת טעינה, רכב חשמלי, מכירת מטענים, התקנת עמדות">
+    <meta name="author" content="A - Power">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A - Power</title>
+    <link rel="stylesheet" href="{% static 'shop/css/apwrWelcome.css' %}">
+    <link rel="stylesheet" href="{% static 'shop/css/apwrStd.css' %}">
+
+</head>
+<body>
+{{ csrf_token|stringformat:"s"|json_script:"csrf-token" }}
+    <header id="hdrMainId">
+        <section class="hdrSecLeft" id="hdrBlk1Id">
+            <a href="/" class="hdrPar" id="topHdrId">A - Power</a>
+        </section>
+        <!--
+        <section class="hdrSecLeft" id="hdrBlk1Id">
+            <p class="hdrPar" id="topHdrId">A - Power</p>
+        </section>
+        <section class="hdrSecLeft" id="hdrBlk2Id">
+            <p class="hdrPar" id="hdrCellId">052 - 7088577</p>
+        </section>
+        <section class="hdrSecRight" id="hdrBlk3Id">
+            <div id="hdrPar1Id">טעינת רכב חשמלי</div>
+            <div id="hdrPar2Id">מכירה, התקנה ורישוי עמדות</div>
+        </section>
+        -->
+    </header>
+    <!-- <section class="row" id="row1Id">
+        <div class="centerCont" id="row1CenterId">
+            <div class="row1ParWrap" id="row1ParId">
+                <p class="row1Par" style="font-weight: bold">אספקת עמדות טעינה בהתאמה לצרכי הלקוח</p>
+                <p class="row1Par" style="font-size: smaller">ליווי אישי מרגע ההזמנה עד גמר החיבור וההפעלה של העמדה</p>
+                <p class="row1Par" style="font-size: smaller">העמדות מותאמות לגודל החיבור הזמין ומצב התשתיות באתר ההתקנה.</p>
+            </div>
+        </div>
+    </section> -->
+    <section class="row" id="row1Id">
+        <div class="centerCont" id="row1CenterId">
+            <!--
+            <div class="itemWrap" id="itemsWrapId">
+
+            </div>
+            -->
+        </div>
+    </section>
+
+    <br>
+    <br>
+    <!--
+<footer id="debugId">this is the footer</footer>
+-->
+{{ orderList|json_script:"orders-data" }}
+<script>
+    // loginPageURL setup
+    const LOGIN_PAGE_URL = "{% url 'loginPageURL' %}";
+</script>
+</body>
+</html>
+
+<script src="{% static 'shop/js/apwrMain.js' %}"></script>
+<script src="{% static 'shop/js/apwrmng.js' %}"></script>
