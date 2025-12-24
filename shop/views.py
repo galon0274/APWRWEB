@@ -121,55 +121,59 @@ def createOrder(request):
     try:
         # Load the JSON body
         data = json.loads(request.body)
-        items_array = data.get('items',[])
-        personName = data.get('personName')
-        mailAdd = data.get('mailAdd')
-        cellphone = data.get('cellphone')
-        streetAdd = data.get('streetAdd')
-        streetNumAdd = data.get('streetNumAdd')
-        cityAdd = data.get('cityAdd')
-        #for item in items_array:
-        #   f1 = item.get('dsc')
-        #   f2 = item.get('price')
+        items_array = data.get('items', [])
+        with transaction.atomic():
+            personName = data.get('personName')
+            mailAdd = data.get('mailAdd')
+            cellphone = data.get('cellphone')
+            streetAdd = data.get('streetAdd')
+            streetNumAdd = data.get('streetNumAdd')
+            cityAdd = data.get('cityAdd')
+            # for item in items_array:
+            #   f1 = item.get('dsc')
+            #   f2 = item.get('price')
 
-        new_order_num = get_new_order_num()
-        # counters = GCounters.objects.all()[0]
-        # current_count = counters.order_num_count
-        new_order = Order.objects.create(
-            order_num = new_order_num,
-            full_name = personName,
-            email_add = mailAdd,
-            cell_num = cellphone,
-            street_name = streetAdd,
-            house_num = streetNumAdd,
-            city = cityAdd,
-            order_status = 'PENDING',
-            stage = 'חדש'
-        )
-        total_cost = 0
-
-        for co_item in items_array:
-            new_item = OrderItem.objects.create(
-                order = new_order,
-                product = co_item['dsc'],
-                quantity = 1,
-                price_at_order = co_item['price']
+            new_order_num = get_new_order_num()
+            # counters = GCounters.objects.all()[0]
+            # current_count = counters.order_num_count
+            new_order = Order.objects.create(
+                order_num = new_order_num,
+                full_name = personName,
+                email_add = mailAdd,
+                cell_num = cellphone,
+                street_name = streetAdd,
+                house_num = streetNumAdd,
+                city = cityAdd,
+                order_status = 'PENDING',
+                stage = 'חדש'
             )
-            total_cost += co_item['price']
-            new_item.save()
+            total_cost = 0
 
-        new_order.total_cost = total_cost
-        new_order.save()
+            for co_item in items_array:
+                new_item = OrderItem.objects.create(
+                    order=new_order,
+                    product=co_item['dsc'],
+                    quantity=1,
+                    price_at_order=co_item['price']
+                )
+                total_cost += co_item['price']
+                new_item.save()
+
+            new_order.total_cost = total_cost
+            new_order.save()
 
         # Send a success response back to the JavaScript
         return JsonResponse({
             'status': 'success',
             'confirmation_num': new_order_num
-        },status = 201)
+        }, status = 201)
     except Exception as e:
-        return JsonResponse({'status': 'error', 'message': 'failed to process order.'}, status=500)
-#    except json.JSONDecodeError:
-#        return JsonResponse({'status': 'error', 'message': 'Invalid JSON format.'}, status=400)
+        # Log the error for yourself in DigitalOcean logs
+        print(f"Order Error: {str(e)}")
+        return JsonResponse({
+            'status': 'error',
+            'message': 'Failed to process order. Please try again.'
+        }, status=500)
 
 
 @require_POST
@@ -192,17 +196,17 @@ def updateOrder(request):
             # stage approval
             order = Order.objects.get(order_num = order_num)
             order_stage = order.stage
-            if (order_stage == ''):
+            if order_stage == '':
                 order.stage = 'חדש'
-            elif (order_stage == 'חדש'):
+            elif order_stage == 'חדש':
                 order.stage = 'נדרש סקר'
-            elif (order_stage == 'נדרש סקר'):
+            elif order_stage == 'נדרש סקר':
                 order.stage = 'מאושר לרכש'
-            elif (order_stage == 'מאושר לרכש'):
+            elif order_stage == 'מאושר לרכש':
                 order.stage = 'מאושר להתקנה'
-            elif (order_stage == 'מאושר להתקנה'):
+            elif order_stage == 'מאושר להתקנה':
                 order.stage = 'בוצע'
-            elif (order_stage == 'בוצע'):
+            elif order_stage == 'בוצע':
                 order.stage = 'ארכיב'
             else:
                 order.stage = 'חדש'
