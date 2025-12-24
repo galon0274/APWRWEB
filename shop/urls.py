@@ -8,6 +8,7 @@ urlpatterns = [
     path('api/create-order/', views.createOrder, name='createOrder'),
     path('api/update-order/', views.updateOrder, name='updateOrder'),
     path('api/get_order_data/', views.get_order_data_api, name='get_order_data_api'),
+    path('order-success/<int:order_id>/', views.order_success, name='order_success'),
     # path('api/get_order_list/', views.get_order_list_api, name='get_order_list_api'),
     path('apwrLogin/', views.loginPageReq, name='loginPageURL'),
     path('api/Login/', views.login_check_api, name='login_check_api'),

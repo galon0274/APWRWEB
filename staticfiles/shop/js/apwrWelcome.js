@@ -969,22 +969,14 @@ async function createOrder() {
             body: JSON.stringify(dataToSend)
         });
 
-        /*if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(`Server Error (${response.status}): ${errorData.message}`);
-        }
-        */
-
-
         const responseData = await response.json();
-        console.log("SUCCESS. Server acknowledged with message:", responseData.message);
 
         if (response.ok) {
-            const confNumber = responseData.confirmation_num;
-            presentAproval(confNumber);
+            // const confNumber = responseData.confirmation_num;
+            window.location.href = `/order-success/${responseData.confirmation_num}/`;
+            // presentAproval(confNumber);
         } else {
-            const errorData = await response.json();
-            throw new Error(`Server Error (${response.status}): ${errorData.message}`);
+            alert("Error: " + responseData.message);
         }
 
     } catch (error) {

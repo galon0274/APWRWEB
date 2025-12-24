@@ -176,6 +176,11 @@ def createOrder(request):
         }, status=500)
 
 
+def order_success(request, order_id):
+    return render(request, 'order_success.html', {
+        'confirmation_num': order_id
+    })
+
 @require_POST
 @csrf_protect
 def updateOrder(request):

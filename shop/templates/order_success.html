@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="מכירה והתקנה של מטענים לרכבים חשמליים">
+    <meta name="keywords" content="עמדת טעינה, רכב חשמלי, מכירת מטענים, התקנת עמדות">
+    <meta name="author" content="A - Power">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A - Power</title>
+    <link rel="stylesheet" href="{% static 'shop/css/apwrWelcome.css' %}">
+    <link rel="stylesheet" href="{% static 'shop/css/apwrStd.css' %}">
+
+</head>
+<body>
+    <header id="hdrMainId">
+        <section class="hdrSecLeft" id="hdrBlk1Id">
+            <a href="/" class="hdrPar" id="topHdrId">A - Power</a>
+        </section>
+    </header>
+
+    <section class="row" id="row1Id">
+        <div class="centerCont" id="row1CenterId">
+            <div class="stdBlkWrap" id="stdBlkWrapId">
+                <h1 class="stdTitle">הזמנתך התקבלה בהצלחה</h1>
+                <p class="stdTitle">נציגנו ייצרו קשר לתיאום ההתקנה / המשלוח</p>
+                <div style="display: flex; justify-content: flex-start; flex-direction: row-reverse; gap: 10px;">
+                    <span class="stdTitle" style="direction: ltr;">#{{ confirmation_num }}</span>
+                    <span class="stdTitle">מספר הזמנה:</span>
+                </div>
+                <a class="stdBtnH" href="/">המשך קניה באתר</a>
+            </div>
+        </div>
+    </section>
+
+    <br>
+    <br>
+    <!--
+<footer id="debugId">this is the footer</footer>
+-->
+
+
+</body>
+</html>
+
+<script src="{% static 'shop/js/apwrMain.js' %}"></script>
+
+
