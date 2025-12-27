@@ -7,6 +7,7 @@ urlpatterns = [
     path('testit/', views.testit, name='testit'),
     path('api/create-order/', views.createOrder, name='createOrder'),
     path('api/update-order/', views.updateOrder, name='updateOrder'),
+    path('api/get-order-list/', views.get_order_list_api, name='get_order_list_api'),
     path('api/get_order_data/', views.get_order_data_api, name='get_order_data_api'),
     path('order-success/<int:order_id>/', views.order_success, name='order_success'),
     # path('api/get_order_list/', views.get_order_list_api, name='get_order_list_api'),

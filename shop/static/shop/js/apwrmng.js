@@ -371,6 +371,9 @@ function presentOrderData(orderData) {
 
 }
 function back2Orders() {
+    const redirect_url = '/manager/';
+    window.location.href = redirect_url;
+    /*
     let coExistE = document.getElementById('sttWrapId');
     if (coExistE) {
         coExistE.remove();
@@ -399,6 +402,8 @@ function back2Orders() {
     } else {
         console.error("Could not find script element with ID 'orders-data'. Check your template.");
     }
+
+     */
 }
 async function updateOrder(event) {
     const btnE = event.target;
@@ -488,8 +493,34 @@ async function updateOrder(event) {
      */
 
 }
-function init_manager_page(){
+async function init_manager_page(){
     apwrPageSetup();
+
+    const API_URL = '/api/get-order-list/'; // Define the URL for clarity
+    // const response = await fetch('/api/orders/');
+    // const data = await response.json();
+    try {
+        const response = await fetch(API_URL);
+        const responseData = await response.json();
+        const orderList = responseData.orders_list;
+
+        if (response.ok) {
+            // handle redirect
+            // window.location.href = responseData.redirect_url;
+            console.log('orders list was received from server:', orderList);
+            createMngSec(orderList);
+
+        } else {
+            console.log('Oredr List was not found or access dined ');
+            console.log("Server message:", message);
+        }
+
+
+    } catch (error) {
+        console.error("Fetch request failed:", error.message);
+    }
+
+    /*
     const scriptElement = document.getElementById('orders-data');
     // Insert here the orderList fetch command
     // Check if the element exists before trying to access its content
@@ -512,6 +543,8 @@ function init_manager_page(){
     } else {
         console.error("Could not find script element with ID 'orders-data'. Check your template.");
     }
+
+     */
 
 
 }

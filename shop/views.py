@@ -19,11 +19,9 @@ from shop.models import Order, OrderItem, Product
 
 def loginPageReq(request):
     """
-
     :param request:
     :return:
     """
-    data = 'test'
     return render(request, 'apwrLogIn.html')
 @require_POST
 @csrf_protect
@@ -60,7 +58,7 @@ def get_order_data_api(request):
     # Load the JSON body
     data = json.loads(request.body)
     try:
-        order = Order.objects.get(order_num = data)
+        order = Order.objects.get(order_num=data)
         order_dict = {
             'order_num': order.order_num,
             'order_date': order.order_date,
@@ -86,7 +84,7 @@ def get_order_data_api(request):
             return JsonResponse({'error': "Not Found"}, Status = 404)
 
 
-def m_dashboard(request):
+def get_order_list_api(request):
     orders_queryset = Order.objects.prefetch_related('items').all().order_by('-order_date')
     orders_data = []
     for order in orders_queryset:
@@ -108,11 +106,14 @@ def m_dashboard(request):
         }
         orders_data.append(order_dict)
 
-    context = {
-        'orderList': orders_data,
-    }
-    return render(request, 'apwrMang.html', context)
+    return JsonResponse({
+                'status': 'success',
+                'orders_list': orders_data
+            })
 
+
+def m_dashboard(request):
+    return render(request, 'apwrMang.html')
 
 
 @require_POST
@@ -197,9 +198,10 @@ def updateOrder(request):
         # order_stage = data.get('stage')
         actionSel = data.get('actionSel')
 
+        order = Order.objects.get(order_num=order_num)
+
         if actionSel == 'opt1':
             # stage approval
-            order = Order.objects.get(order_num = order_num)
             order_stage = order.stage
             if order_stage == '':
                 order.stage = 'חדש'
@@ -226,7 +228,6 @@ def updateOrder(request):
 
         elif actionSel == 'opt2':
             # update order data
-            order = Order.objects.get(order_num = order_num)
             order.full_name = personName
             order.email_add = mailAdd
             order.cell_num = cellphone
@@ -244,8 +245,6 @@ def updateOrder(request):
 
         elif actionSel == 'opt3':
             # Delete the selected order
-            order = Order.objects.get(order_num = order_num)
-
             order.delete()
             manager_url = reverse('m_dashboard')
             return JsonResponse({
@@ -259,7 +258,7 @@ def updateOrder(request):
             test = 'temp'
 
     except Exception as e:
-        return JsonResponse({'status': 'error', 'message': 'failed to process order.'}, status=500)
+        return JsonResponse({'status': 'error', 'message': 'failed to update order.'}, status=500)
 
 
 # Shop Main Page View
