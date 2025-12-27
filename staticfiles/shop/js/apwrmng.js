@@ -441,15 +441,7 @@ async function updateOrder(event) {
             body: JSON.stringify(dataToSend)
         });
 
-        /*if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(`Server Error (${response.status}): ${errorData.message}`);
-        }
-        */
-
-
         const responseData = await response.json();
-        console.log("SUCCESS. Server acknowledged with message:", responseData.message);
 
         if (response.ok) {
             // if ok page should be directed to load updated orderlist
@@ -459,10 +451,8 @@ async function updateOrder(event) {
             window.location.href = responseData.redirect_url;
             // createMngSec(orderList);
         } else {
-            const errorData = await response.json();
-            throw new Error(`Server Error (${response.status}): ${errorData.message}`);
+            console.log("ERROR. Server message:", responseData.message);
         }
-
     } catch (error) {
         console.error("Fetch request failed:", error.message);
     }

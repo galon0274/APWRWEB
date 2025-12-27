@@ -223,7 +223,7 @@ def updateOrder(request):
             return JsonResponse({
                 'status': 'success',
                 'redirect_url': manager_url,
-                'message': 'Order updated successfully'
+                'message': f'Order {order_num} Stage was updated successfully'
             })
 
         elif actionSel == 'opt2':
@@ -240,7 +240,7 @@ def updateOrder(request):
             return JsonResponse({
                 'status': 'success',
                 'redirect_url': manager_url,
-                'message': 'Order updated successfully'
+                'message': f'Order {order_num} updated successfully'
             })
 
         elif actionSel == 'opt3':
@@ -250,7 +250,7 @@ def updateOrder(request):
             return JsonResponse({
                 'status': 'success',
                 'redirect_url': manager_url,
-                'message': 'Order updated successfully'
+                'message': f'Order {order_num} was deleted'
             })
 
         else:
