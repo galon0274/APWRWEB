@@ -491,7 +491,7 @@ async function updateOrder(event) {
 function init_manager_page(){
     apwrPageSetup();
     const scriptElement = document.getElementById('orders-data');
-
+    // Insert here the orderList fetch command
     // Check if the element exists before trying to access its content
     if (scriptElement) {
         // 2. Extract the text content (the JSON string)
