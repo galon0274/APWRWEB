@@ -1,7 +1,7 @@
 // Retrieve the CSRF Token from the template
 const csrfTokenElement = document.getElementById('csrf-token');
 const CSRF_TOKEN = csrfTokenElement ? JSON.parse(csrfTokenElement.textContent) : null;
-
+/*
 function getMangData(){
     apwrPageSetup();
     let myName = 'testName';
@@ -18,6 +18,7 @@ function getMangData(){
     });
     event.preventDefault();
 }
+*/
 
 function createMngSec(ordersList) {
     console.log('start creating mng items', ordersList.length);
