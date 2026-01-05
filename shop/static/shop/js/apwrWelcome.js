@@ -966,14 +966,7 @@ function presentAproval(data) {
 
 
 }
-function returnToItems() {
-    console.log('Starts return');
-    window.open('/', '_self');
-    // let itemsWrapE = document.getElementById('itemsWrapId');
-    // let coFrameE = document.getElementById('checkOutFrameId');
-    // itemsWrapE.style.display = 'flex';
-    // coFrameE.style.display = 'none';
-    }
+
 
 function createInput(formE, reqId, reqLabel, reqVal, reqWidth) {
     let inputWrapE = document.createElement('div');
