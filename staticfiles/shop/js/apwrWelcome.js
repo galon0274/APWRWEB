@@ -1,7 +1,7 @@
 console.log('start apwr welcome');
 
 let pList = [];
-const cartList = [];
+// const cartList = [];
 let coItemsList = [];
 
 // 1. Retrieve the CSRF Token from the template
@@ -444,14 +444,14 @@ function createItems(pList) {
         btnE.dataset.frameNum = itemNumber;
         let rdE = document.getElementById('item' + itemNumber + 'Radio1Id');
         if (rdE.checked) {
-            btnE.dataset.procType = 1;
+            btnE.dataset.procType = 'itemOnly';
         } else {
-            btnE.dataset.procType = 2;
+            btnE.dataset.procType = 'itemPlusInst';
         }
         console.log('btn procType ', btnE.dataset.procType);
 
         stdWrapE.appendChild(btnE);
-        txtNode = document.createTextNode('בחר פריט');
+        txtNode = document.createTextNode('לרכישה');
         btnE.appendChild(txtNode);
         elVertCenter(stdWrapE, txtWrapE);
         elVertCenter(stdWrapE, btnE);
@@ -717,7 +717,7 @@ function showSlide(fNum, delta2pr) {
     picWrapE.dataset.pic2pr = pic2pr;
     console.log('picList[pic2pr] ', picList[pic2pr]);
 }
-
+/*
 function createCheckOutFrame() {
     let centerE = document.getElementById('row3CenterId');
     let coExistE = document.getElementById('checkOutFrameId');
@@ -929,82 +929,12 @@ function createCheckOutFrame() {
     stdWrapE.appendChild(btnE);
     textNode = document.createTextNode('חזור');
     btnE.appendChild(textNode);
-
-
-
-
-
-
 }
-async function createOrder() {
-    console.log('start create order');
-    let items = coItemsList;
-    console.log('start create order, items are:', items);
-    const API_URL = '/api/create-order/'; // Define the URL for clarity
 
-    if (!CSRF_TOKEN) {
-        console.error("CSRF token is missing. Aborting request.");
-        return;
-    }
+ */
 
-    // Structure the data as an object to send JSON
-    const dataToSend = {
-        items: items,
-        personName: document.getElementById('personNameId').value,
-        mailAdd: document.getElementById('mailAddId').value,
-        cellphone: document.getElementById('cellphoneId').value,
-        streetAdd: document.getElementById('streetAddId').value,
-        streetNumAdd: document.getElementById('streetNumAddId').value,
-        cityAdd: document.getElementById('cityAddId').value
 
-    };
 
-    try {
-        const response = await fetch(API_URL, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': CSRF_TOKEN
-            },
-            body: JSON.stringify(dataToSend)
-        });
-
-        const responseData = await response.json();
-
-        if (response.ok) {
-            // const confNumber = responseData.confirmation_num;
-            window.location.href = `/order-success/${responseData.confirmation_num}/`;
-            // presentAproval(confNumber);
-        } else {
-            alert("Error: " + responseData.message);
-        }
-
-    } catch (error) {
-        console.error("Fetch request failed:", error.message);
-    }
-
-    /*
-    $.ajax({
-        data: {
-            items: JSON.stringify(items),
-            personName: $('#personNameId').val(),
-            familyName: $('#familyNameId').val(),
-            cellphone: $('#cellphoneId').val(),
-            streetAdd: $('#streetAddId').val(),
-            streetNumAdd: $('#streetNumAddId').val(),
-            cityAdd: $('#cityAddId').val()
-
-        },
-        type: 'POST',
-        url: '/createOrder'
-    })
-        .done(function (data) {
-            console.log('create order is done', data);
-            presentAproval(data);
-    });
-    event.preventDefault();
-    */
-}
 function presentAproval(data) {
     let centerE = document.getElementById('row3CenterId');
     let coExistE = document.getElementById('checkOutFrameId');
@@ -1074,28 +1004,10 @@ function createInput(formE, reqId, reqLabel, reqVal, reqWidth) {
 
 }
 
-function creatItemWrap(fatherE, wList, wInd) {
-    let wrapE = document.createElement('div');
-    wrapE.classList.add('stdWrap');
-    fatherE.appendChild(wrapE);
-    let stdTxtE = document.createElement('p');
-    stdTxtE.classList.add('stdCellTxt');
-    let txtNode = document.createTextNode(wList[wInd].dsc);
-    wrapE.appendChild(stdTxtE);
-    stdTxtE.appendChild(txtNode);
-
-    stdTxtE = document.createElement('p');
-    stdTxtE.classList.add('itemPrice');
-    txtNode = document.createTextNode(wList[wInd].price.toLocaleString() + ' ש"ח');
-    wrapE.appendChild(stdTxtE);
-    stdTxtE.appendChild(txtNode);
-}
 
 
-function coItem(dsc, price) {
-    this.dsc = dsc;
-    this.price = price;
-}
+
+
 function findProd(pid) {
     let prodIndex = 0;
     for(let i=0; i < pList.length; i++) {
@@ -1105,11 +1017,7 @@ function findProd(pid) {
     }
     return prodIndex;
 }
-function cartItem(pid, serviceType, qpp){
-    this.pid = pid;
-    this.serviceType = serviceType;
-    this.qpp = qpp;
-}
+
 
 function hideNameLable(){
     console.log('hide name label');

@@ -15,6 +15,7 @@
     <script src="https://kit.fontawesome.com/c42fc0c0f4.js" crossorigin="anonymous"></script>
 </head>
 <body>
+    {{ csrf_token|stringformat:"s"|json_script:"csrf-token" }}
     <header id="hdrMainId">
         <section class="hdrSecLeft" id="hdrBlk1Id">
             <a href="/" class="hdrPar" id="topHdrId">A - Power</a>
@@ -46,6 +47,5 @@
 </body>
 </html>
 <script src="{% static 'shop/js/apwrMain.js' %}"></script>
-<script src="{% static 'shop/js/apwrWelcome.js' %}"></script>
 <script src="{% static 'shop/js/itemPage.js' %}"></script>
 

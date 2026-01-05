@@ -1,4 +1,8 @@
 console.log('start item page');
+// 1. Retrieve the CSRF Token from the template
+const csrfTokenElement = document.getElementById('csrf-token');
+const CSRF_TOKEN = csrfTokenElement ? JSON.parse(csrfTokenElement.textContent) : null;
+let coItemsList = [];
 /*
 const pList = [];
 const cartList = [];
@@ -456,14 +460,14 @@ function createItemDetailFrame(item_data) {
             // btnE.dataset.frameNum = item_data - 100;
     let rdE = document.getElementById('itemRadio1Id');
     if (rdE.checked) {
-        btnE.dataset.procType = 1;
+        btnE.dataset.procType = 'itemOnly';
     } else {
-        btnE.dataset.procType = 2;
+        btnE.dataset.procType = 'itemPlusInst';
     }
     console.log('btn procType ', btnE.dataset.procType);
 
     stdWrapE.appendChild(btnE);
-    txtNode = document.createTextNode('בחר פריט');
+    txtNode = document.createTextNode('לרכישה');
     btnE.appendChild(txtNode);
     elVertCenter(stdWrapE, txtWrapE);
     elVertCenter(stdWrapE, btnE);
@@ -718,6 +722,226 @@ function toggleRows(event) {
         }
     }
 }
+
+function itemCreateCheckOutFrame(cartList) {
+    let centerE = document.getElementById('row3CenterId');
+    let coExistE = document.getElementById('checkOutFrameId');
+    if (coExistE) {
+        coExistE.remove();
+    }
+    let sendExistE = document.getElementById('senDetailsBlkId');
+    if (sendExistE) {
+        sendExistE.remove();
+    }
+    let itemFrameExistE = document.getElementById('itemDetailsFrameId');
+    if (itemFrameExistE) {
+        itemFrameExistE.remove();
+    }
+
+
+    let checkOutFrameE = document.createElement('div');
+    checkOutFrameE.classList.add('checkOutFrame');
+    checkOutFrameE.id = 'checkOutFrameId';
+    centerE.appendChild(checkOutFrameE);
+    // create check out title
+    let titleE = document.createElement('p');
+    titleE.classList.add('stdTitle');
+    checkOutFrameE.appendChild(titleE);
+    let textNode = document.createTextNode('סיכום הזמנה');
+    titleE.appendChild(textNode);
+
+    coItemsList = [];
+    let coIndex = 0;
+    let itemIndex = -1;
+    let currentItemName = '';
+    let currentItemPrice = 0;
+    let currentItemInstPrice = 0;
+    let orderSumPrice = 0;
+    let insType = '';
+
+    for (let i=0; i<cartList.length; i++) {
+        insType = cartList[i].serviceType;
+        console.log('itemObj is: ', itemObj);
+        // itemIndex = findProd(cartList[i].pid);
+        currentItemName = itemObj.name;
+        currentItemPrice = itemObj.price2Cell;
+        currentItemInstPrice = itemObj.instPrice;
+        if (insType != 'instOnly'){
+            coItemsList[coIndex] = new coItem(currentItemName, currentItemPrice);
+            orderSumPrice += currentItemPrice;
+            coIndex += 1;
+            console.log('service type ',cartList[i].serviceType)
+        }
+
+        if (insType == 'itemOnly') {
+            currentItemName = 'משלוח עד בית הלקוח';
+            currentItemPrice = 0;
+            coItemsList[coIndex] = new coItem(currentItemName, currentItemPrice);
+            orderSumPrice += currentItemPrice;
+            coIndex += 1;
+        } else {
+            // insType = 2;
+            currentItemName = 'סקר אתר לפני התקנה';
+            currentItemPrice = 0;
+            coItemsList[coIndex] = new coItem(currentItemName, currentItemPrice);
+            orderSumPrice += currentItemPrice;
+            coIndex += 1;
+            currentItemName = 'ביצוע התקנה סטנדרטית עד 30 מטר';
+            currentItemPrice = itemObj.instPrice;
+            coItemsList[coIndex] = new coItem(currentItemName, currentItemPrice);
+            orderSumPrice += currentItemPrice;
+            coIndex += 1;
+        }
+    }
+    console.log('coItemsList ', coItemsList);
+            //
+    let coFrameRowE = document.createElement('div');
+    coFrameRowE.classList.add('coRow');
+    checkOutFrameE.appendChild(coFrameRowE);
+    let numOfWraps = coItemsList.length;
+    for (let i= 0; i < numOfWraps; i++){
+        creatItemWrap(coFrameRowE, coItemsList, i);
+    }
+
+
+
+    // Create row num 2 - customer details
+    coFrameRowE = document.createElement('div');
+    coFrameRowE.classList.add('coRow');
+    checkOutFrameE.appendChild(coFrameRowE);
+
+    let stdTxtE = document.createElement('p');
+    stdTxtE.classList.add('stdTxtB');
+    if (insType == 'itemOnly') {
+        textNode = document.createTextNode('כתובת למשלוח');
+    } else {
+        textNode = document.createTextNode('כתובת ההתקנה');
+    }
+    coFrameRowE.appendChild(stdTxtE);
+    stdTxtE.appendChild(textNode);
+
+    let formE = document.createElement('form');
+    coFrameRowE.appendChild(formE);
+    let reqId = 'personNameId';
+    let reqLabel = 'שם מלא';
+    let reqVal = ''
+    let reqWidth = 'normal';
+    createInput(formE, reqId, reqLabel, reqVal, reqWidth);
+    reqId = 'cellphoneId';
+    reqLabel = 'מספר נייד';
+    reqWidth = 'normal';
+    createInput(formE, reqId, reqLabel, reqVal, reqWidth);
+    reqId = 'mailAddId';
+    reqLabel = 'כתובת מייל';
+    reqWidth = 'wide';
+    createInput(formE, reqId, reqLabel, reqVal, reqWidth);
+    formE = document.createElement('form');
+    coFrameRowE.appendChild(formE);
+    reqId = 'streetAddId';
+    reqLabel = 'רחוב';
+    reqWidth = 'wide';
+    createInput(formE, reqId, reqLabel, reqVal, reqWidth);
+    reqId = 'streetNumAddId';
+    reqLabel = 'מספר בית';
+    reqWidth = 'narrow';
+    createInput(formE, reqId, reqLabel, reqVal, reqWidth);
+    reqId = 'cityAddId';
+    reqLabel = 'עיר';
+    reqWidth = 'wide';
+    createInput(formE, reqId, reqLabel, reqVal, reqWidth);
+
+    // Create row num 3 - payment details
+    coFrameRowE = document.createElement('div');
+    coFrameRowE.classList.add('coRow');
+    checkOutFrameE.appendChild(coFrameRowE);
+
+    stdTxtE = document.createElement('p');
+    stdTxtE.classList.add('stdTxtB');
+    textNode = document.createTextNode('תנאי תשלום');
+    coFrameRowE.appendChild(stdTxtE);
+    stdTxtE.appendChild(textNode);
+
+    stdTxtE = document.createElement('p');
+    stdTxtE.classList.add('stdTxt');
+    textNode = document.createTextNode('עד 10 תשלומים ללא ריבית - בכרטיס אשראי');
+    coFrameRowE.appendChild(stdTxtE);
+    stdTxtE.appendChild(textNode);
+
+    if (insType == 'itemOnly') {
+        stdTxtE = document.createElement('p');
+        stdTxtE.classList.add('stdTxt');
+        textNode = document.createTextNode('התשלום יבוצע בעת המסירה');
+        coFrameRowE.appendChild(stdTxtE);
+        stdTxtE.appendChild(textNode);
+    } else {
+        stdTxtE = document.createElement('p');
+        stdTxtE.classList.add('stdTxt');
+        textNode = document.createTextNode('מחיר התקנה סופי יקבע לאחר אישור סקר ההתקנה');
+        coFrameRowE.appendChild(stdTxtE);
+        stdTxtE.appendChild(textNode);
+
+        stdTxtE = document.createElement('p');
+        stdTxtE.classList.add('stdTxt');
+        textNode = document.createTextNode('במידה והעסקה תבוטל לאחר ביצוע סקר - יחויב הלקוח בעלות של 300 ש"ח');
+        coFrameRowE.appendChild(stdTxtE);
+        stdTxtE.appendChild(textNode);
+
+        stdTxtE = document.createElement('p');
+        stdTxtE.classList.add('stdTxt');
+        textNode = document.createTextNode('התשלום יבוצע לאחר ההתקנה');
+        coFrameRowE.appendChild(stdTxtE);
+        stdTxtE.appendChild(textNode);
+    }
+
+
+    // Create row num 4 - place an order
+    coFrameRowE = document.createElement('div');
+    coFrameRowE.classList.add('coRow');
+    checkOutFrameE.appendChild(coFrameRowE);
+
+    let stdWrapE = document.createElement('div');
+    stdWrapE.classList.add('stdWrap');
+    coFrameRowE.appendChild(stdWrapE);
+
+    let txtWrapE = document.createElement('div');
+    txtWrapE.classList.add('txtWrapR');
+    stdWrapE.appendChild(txtWrapE);
+
+    stdTxtE = document.createElement('p');
+    stdTxtE.classList.add('stdTxt');
+    txtWrapE.appendChild(stdTxtE);
+    textNode = document.createTextNode('סה"כ לתשלום:');
+    stdTxtE.appendChild(textNode);
+
+    stdTxtE = document.createElement('p');
+    stdTxtE.classList.add('totalPrice');
+    txtWrapE.appendChild(stdTxtE);
+            //stdTxtE.id = 'item' + itemNumber + 'TotalPriceId';
+
+    textNode = document.createTextNode(orderSumPrice.toLocaleString() + ' ש"ח');
+    stdTxtE.appendChild(textNode);
+
+    let btnE = document.createElement('button');
+    btnE.classList.add('orderBtnH');
+    btnE.id = 'orderBtnId';
+    btnE.addEventListener('click', createOrder);
+    //btnE.dataset.orderItems = coItemsList;
+            //btnE.id = 'item' + itemNumber + 'BtnId';
+    stdWrapE.appendChild(btnE);
+    textNode = document.createTextNode('הזמנה');
+    btnE.appendChild(textNode);
+
+    btnE = document.createElement('button');
+    btnE.classList.add('orderBtnH');
+    btnE.addEventListener('click', returnToItems);
+    //btnE.id = 'returnBtnId';
+            //btnE.id = 'item' + itemNumber + 'BtnId';
+    stdWrapE.appendChild(btnE);
+    textNode = document.createTextNode('חזור');
+    btnE.appendChild(textNode);
+
+}
+
 
 function initItemPage() {
     // This code will only run once the template's HTML structure
