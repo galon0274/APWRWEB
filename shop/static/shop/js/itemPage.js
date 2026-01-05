@@ -262,7 +262,7 @@ function createItemDetailFrame(item_data) {
                 //
         inputE.checked = true;
         inputE.dataset.frameNum = 0;
-        inputE.dataset.procOp = 1;
+        inputE.dataset.procOp = '1';
         // inputE.dataset.itemType = item_data.type;
                 //inputE.addEventListener('click', toggleHdl);
         inputE.id = 'itemRadio' + inputE.dataset.procOp + 'Id';
@@ -347,7 +347,7 @@ function createItemDetailFrame(item_data) {
                 //
         inputE.checked = true;
         inputE.dataset.frameNum = 0;
-        inputE.dataset.procOp = 1;
+        inputE.dataset.procOp = '1';
         // inputE.dataset.itemType = item_data.type;
         inputE.addEventListener('click', itemPageToggleHdl);
         inputE.id = 'itemRadio' + inputE.dataset.procOp + 'Id';
@@ -386,7 +386,7 @@ function createItemDetailFrame(item_data) {
                 //
         inputE.checked = false;
         inputE.dataset.frameNum = 0;
-        inputE.dataset.procOp = 2;
+        inputE.dataset.procOp = '2';
         // inputE.dataset.itemType = item_data.type;
         inputE.addEventListener('click', itemPageToggleHdl);
         inputE.id = 'itemRadio' + inputE.dataset.procOp + 'Id';
@@ -457,7 +457,9 @@ function createItemDetailFrame(item_data) {
     btnE.id = 'itemBtnId';
     btnE.addEventListener('click', addToCart);
     btnE.dataset.pid = item_data.sid;
+    btnE.dataset.procType = 'itemOnly';
             // btnE.dataset.frameNum = item_data - 100;
+    /*
     let rdE = document.getElementById('itemRadio1Id');
     if (rdE.checked) {
         btnE.dataset.procType = 'itemOnly';
@@ -465,6 +467,8 @@ function createItemDetailFrame(item_data) {
         btnE.dataset.procType = 'itemPlusInst';
     }
     console.log('btn procType ', btnE.dataset.procType);
+
+    */
 
     stdWrapE.appendChild(btnE);
     txtNode = document.createTextNode('לרכישה');
@@ -593,14 +597,18 @@ function itemPageToggleHdl(event){
 
     console.log('rdE.dataset.itemType', rdE.dataset.itemType);
     console.log('rdE.dataset.type', rdE.dataset.type);
-
+    console.log('btnE before tug: ', btnE);
     let parProcType = 0;
     // procType = 1 --> without installation
     // procType = 2 --> with installation
     if (procType == 1) {
         parProcType = 2;
+        btnE.dataset.procType = 'itemOnly';
+        console.log('btnE after tug: ', btnE);
     } else {
         parProcType = 1;
+        btnE.dataset.procType = 'itemPlusInst';
+        console.log('btnE after tug: ', btnE);
     }
     const paraRadioE = document.getElementById('itemRadio' + parProcType + 'Id');
     const finalPriceE = document.getElementById('itemTotalPriceId');
@@ -615,7 +623,7 @@ function itemPageToggleHdl(event){
     console.log('par after is ', paraRadioE.checked);
     procType = rdE.dataset.procOp;
     console.log('proctype to cell', procType);
-    btnE.dataset.procType = procType;
+    // btnE.dataset.procType = procType;
     let includePrice = 0;
     if (procType == 1) {
         // without installation
