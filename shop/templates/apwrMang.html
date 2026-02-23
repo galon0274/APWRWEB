@@ -1,4 +1,5 @@
 {% load static %}
+{% load hosts %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,7 +29,7 @@
 
 <script>
     // loginPageURL setup
-    const LOGIN_PAGE_URL = "{% url 'loginPageURL' %}";
+    const LOGIN_PAGE_URL = "{% host_url 'loginPageURL' host 'mng' %}";
 </script>
 </body>
 </html>

@@ -27,12 +27,16 @@ SECRET_KEY = 'django-insecure-$=b-=xz&r_$r1s01nz$#@+ccbqn8p@w1cwn_%1ox&vglz%!4fe
 # DEBUG = True
 DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['www.localhost', 'mng.localhost', 'localhost', '127.0.0.1', '*']
+# ALLOWED_HOSTS = ['a-pwr.co.il', 'www.a-pwr.co.il', 'mng.a-pwr.co.il', '.a-pwr.co.il']
+
+PARENT_HOST = 'localhost:8000' # Add this for local testing
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'django_hosts',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -43,6 +47,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'django_hosts.middleware.HostsRequestMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -51,6 +56,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_hosts.middleware.HostsResponseMiddleware',
 ]
 
 ROOT_URLCONF = 'APWRWEB.urls'
@@ -127,3 +133,13 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+ROOT_HOSTCONF = 'APWRWEB.hosts'  # Dotted path to the hosts.py file
+DEFAULT_HOST = 'www'            # The name of the default host pattern
+
+# 2. Dynamic Session Domain
+if DEBUG:
+    SESSION_COOKIE_DOMAIN = None
+else:
+    SESSION_COOKIE_DOMAIN = ".a-pwr.co.il"
+

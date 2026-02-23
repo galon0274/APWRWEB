@@ -1,4 +1,5 @@
 {% load static %}
+{% load hosts %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -135,9 +136,15 @@
     <br>
 {{ pList|json_script:"items-data" }}
 <script>
-    // loginPageURL setup
-    const LOGIN_PAGE_URL = "{% url 'loginPageURL' %}";
+    const LOGIN_PAGE_URL = "/";
 </script>
+<script>
+    // Test if it can at least find the main shop page via the hosts tag
+    const TEST_URL = "{% host_url 'shop_main' host 'www' %}";
+    console.log("Test URL is: " + TEST_URL);
+</script>
+
+
 <script src="{% static 'shop/js/apwrMain.js' %}"></script>
 <script src="{% static 'shop/js/apwrWelcome.js' %}"></script>
 
