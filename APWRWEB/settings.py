@@ -27,8 +27,12 @@ SECRET_KEY = 'django-insecure-$=b-=xz&r_$r1s01nz$#@+ccbqn8p@w1cwn_%1ox&vglz%!4fe
 # DEBUG = True
 DEBUG = False
 
-# ALLOWED_HOSTS = ['www.localhost', 'mng.localhost', 'localhost', '127.0.0.1', '*']
-ALLOWED_HOSTS = ['a-pwr.co.il', 'www.a-pwr.co.il', 'mng.a-pwr.co.il', '.a-pwr.co.il']
+if DEBUG:
+    ALLOWED_HOSTS = ['www.localhost', 'mng.localhost', 'localhost', '127.0.0.1', '*']
+else:
+    ALLOWED_HOSTS = ['a-pwr.co.il', 'www.a-pwr.co.il', 'mng.a-pwr.co.il', '.a-pwr.co.il']
+
+
 
 # PARENT_HOST = 'localhost:8000' # Add this for local testing
 
@@ -142,12 +146,12 @@ if DEBUG:
 else:
     PARENT_HOST = 'a-pwr.co.il'
 
-if not DEBUG:
-    SESSION_COOKIE_DOMAIN = ".a-pwr.co.il"
-    CSRF_TRUSTED_ORIGINS = [
-        "https://a-pwr.co.il",
-        "https://www.a-pwr.co.il",
-        "https://mng.a-pwr.co.il",
-    ]
+# if not DEBUG:
+#    SESSION_COOKIE_DOMAIN = ".a-pwr.co.il"
+#    CSRF_TRUSTED_ORIGINS = [
+#        "https://a-pwr.co.il",
+#        "https://www.a-pwr.co.il",
+#        "https://mng.a-pwr.co.il",
+#    ]
 
 
