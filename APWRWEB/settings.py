@@ -27,10 +27,10 @@ SECRET_KEY = 'django-insecure-$=b-=xz&r_$r1s01nz$#@+ccbqn8p@w1cwn_%1ox&vglz%!4fe
 # DEBUG = True
 DEBUG = False
 
-ALLOWED_HOSTS = ['www.localhost', 'mng.localhost', 'localhost', '127.0.0.1', '*']
-# ALLOWED_HOSTS = ['a-pwr.co.il', 'www.a-pwr.co.il', 'mng.a-pwr.co.il', '.a-pwr.co.il']
+# ALLOWED_HOSTS = ['www.localhost', 'mng.localhost', 'localhost', '127.0.0.1', '*']
+ALLOWED_HOSTS = ['a-pwr.co.il', 'www.a-pwr.co.il', 'mng.a-pwr.co.il', '.a-pwr.co.il']
 
-PARENT_HOST = 'localhost:8000' # Add this for local testing
+# PARENT_HOST = 'localhost:8000' # Add this for local testing
 
 
 # Application definition
@@ -134,12 +134,20 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-ROOT_HOSTCONF = 'APWRWEB.hosts'  # Dotted path to the hosts.py file
-DEFAULT_HOST = 'www'            # The name of the default host pattern
+ROOT_HOSTCONF = 'APWRWEB.hosts'
+DEFAULT_HOST = 'www'
 
-# 2. Dynamic Session Domain
 if DEBUG:
-    SESSION_COOKIE_DOMAIN = None
+    PARENT_HOST = 'localhost:8000'
 else:
+    PARENT_HOST = 'a-pwr.co.il'
+
+if not DEBUG:
     SESSION_COOKIE_DOMAIN = ".a-pwr.co.il"
+    CSRF_TRUSTED_ORIGINS = [
+        "https://a-pwr.co.il",
+        "https://www.a-pwr.co.il",
+        "https://mng.a-pwr.co.il",
+    ]
+
 
